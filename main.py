@@ -1,48 +1,53 @@
-from bs4 import BeautifulSoup
-import requests
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-import time
-import shutil
+from tkinter import *
+from tkinter import ttk
 
-USERNAME = your_user_name
-PASSWORD = your_password
-def get_class_list():
 
-    options = webdriver.ChromeOptions()
-    options.add_experimental_option("detach", True)
-    driver = webdriver.Chrome(options=options)
-    driver.maximize_window()
-    driver.get("https://my.wgu.edu")
-    time.sleep(1)
-    # #Username
-    elem = driver.find_element(By.XPATH, '//*[@id="login-username"]')
-    elem.send_keys(USERNAME)
-    # #Password
-    elem = driver.find_element(By.ID, "login-password")
-    elem.send_keys(PASSWORD, Keys.ENTER)
-    #Degree Plan
-    time.sleep(1)
-    elem = driver.find_element(By.XPATH, '/html/body/app-root/div/div/app-header/wgu-header/header/div/div/div[1]/wgu-menu/div/ul/li[3]/span/a')
-    elem.click()
-    time.sleep(5)
-    elems = driver.find_elements(By.CSS_SELECTOR, "a.ng-star-inserted")
-
-    #Saving the list as a text file for formatting later
-    with open("classList.txt", "w") as file:
-        for each in elems:
-            file.write(each.text + "\n")
-    # Uncomment to save a backup
-    #shutil.copyfile("classList.txt", "backupList.txt")
-#get_class_list()
+#Formatting the classlist to remove symbols and class numbers
 with open("classList.txt", "r") as file:
-    rawlist = file.readlines()
-#formatting the class list
-rawlist = [each.strip("\n") for each in rawlist]
-rawlist = [each for each in rawlist if each][4:]
+    rawclasslist = file.readlines()
+classlist = [each.replace(" ï¿½" , "")[:-5] for each in rawclasslist]
 
 
-with open ("classList.txt", "w") as file:
-    for each in rawlist:
-        file.write(each + "\n")
+#TODO To avoid fucking it all up USE THIS
+classlistCOPY = classlist
+
+#Finding the right width for Listbox based on longest class name
+word_width = 0
+for each in classlist:
+    if len(each) > word_width:
+        word_width = len(each)
+
+root = Tk()
+root.title("This is my name")
+root.maxsize(800, 600)
+
+frma = ttk.LabelFrame(root, text="Not Started", labelanchor="n")
+frmb = ttk.LabelFrame(root, text="Currently In", labelanchor="n")
+frmc = ttk.LabelFrame(root, text="Finished", labelanchor="n")
+
+frame_list = [frma, frmb, frmc]
+frma.grid(column=0)
+frmb.grid(column=1)
+frmc.grid(column=2)
+
+
+nsslist = Listbox(frma, width=word_width, height=25, selectmode=MULTIPLE)
+nslist = Text(frma, width=30, height=10)
+nsslist.pack()
+
+#Not started list
+for each in classlist:
+    nsslist.insert(END, each)
+
+#Currently in List
+for each in classlist:
+    nsslist.insert(END, each)
+
+#Finished List
+for each in classlist:
+    nsslist.insert(END, each)
+
+b = ttk.Button()
+
+
+root.mainloop()
