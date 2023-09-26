@@ -20,13 +20,13 @@ for each in classlist:
 root = Tk()
 root.title("This is my name")
 root.maxsize(1800, 600)
-root.configure(background="red")
+root.configure(background="#1a5d7f")
 
 # An absolute mess creating all the frames needed.
-frma = LabelFrame(root, text="Not Started", labelanchor="n", borderwidth=0, highlightcolor="gray")
-frmb = LabelFrame(root, text="Currently In", labelanchor="n", borderwidth=0)
-frmc = LabelFrame(root, text="Finished", labelanchor="n", borderwidth=0)
-frmbtna = LabelFrame(root, borderwidth=0, bg="red")
+frma = LabelFrame(root, text="Not Started", labelanchor="n", borderwidth=0, bg="#003057", font=("FUTURA STANDARD", 16, "underline"), fg="white")
+frmb = LabelFrame(root, text="Currently In", labelanchor="n", borderwidth=0, bg="#003057", font=("FUTURA STANDARD", 16, "underline"), fg="white")
+frmc = LabelFrame(root, text="Finished", labelanchor="n", borderwidth=0, bg="#003057", font=("FUTURA STANDARD", 16, "underline"), fg="white")
+frmbtna = LabelFrame(root, borderwidth=0)
 frmbtnb = ttk.LabelFrame(root, borderwidth=0)
 frmbtnc = ttk.LabelFrame(root, borderwidth=0)
 
@@ -40,13 +40,13 @@ frmbtnc.grid(column=2, row=1)
 frame_list = [frma, frmb, frmc, frmbtna, frmbtnb, frmbtnc]
 
 
-nsslist = Listbox(frma, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0)
+nsslist = Listbox(frma, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=, font=("FUTURA STANDARD", 12))
 nsslist.pack()
 
-cinlist = Listbox(frmb, width=word_width, height=25,  selectmode=MULTIPLE, highlightthickness=0, borderwidth=0)
+cinlist = Listbox(frmb, width=word_width, height=25,  selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12))
 cinlist.pack()
 
-finlist = Listbox(frmc, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0)
+finlist = Listbox(frmc, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12))
 finlist.pack()
 
 #Not started list
@@ -97,12 +97,14 @@ def moveclassover(source, destination):
 
 img = PhotoImage(file="testimg.png")
 
-notstartedbtn = Button(frmbtna, command=lambda: moveclassover(nsslist, cinlist), image=img, width=20, height=10)
+notstartedbtn = Button(root, command=lambda: moveclassover(nsslist, cinlist), image=img, width=20, height=10)
 notstartedbtn.grid(column=0, row=1, pady=10, padx=5)
 
 firstcinbtn = Button(root, command=lambda: moveclassover(cinlist, nsslist), image=img, width=20, height=10)
 firstcinbtn.grid(column=1, row=1, pady=10, padx=5)
 
+
+#How do I create multiple btns in same space of grid? 
 firstcinbtntwo = Button(root, command=lambda: moveclassover(cinlist, nsslist), image=img, width=20, height=10)
-firstcinbtntwo.grid(column=1, row=1, pady=10, padx=5)
+firstcinbtntwo.grid(column=1, row=2, pady=10, padx=5)
 root.mainloop()
