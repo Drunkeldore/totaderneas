@@ -40,46 +40,46 @@ frmc.grid(column=2, row=0)
 #frame_list = [frma, frmb, frmc, frmbtna, frmbtnb, frmbtnc]
 
 
-nslist = Listbox(frma, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12))
+nslist = Listbox(frma, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12), name="nslist")
 nslist.pack()
 
-cinlist = Listbox(frmb, width=word_width, height=25,  selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12))
+cinlist = Listbox(frmb, width=word_width, height=25,  selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12), name="cinlist")
 cinlist.pack()
 
-finlist = Listbox(frmc, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12))
+finlist = Listbox(frmc, width=word_width, height=25, selectmode=MULTIPLE, highlightthickness=0, borderwidth=0, font=("FUTURA STANDARD", 12), name="finlist")
 finlist.pack()
 
 #Not started list
-path = "./nsList.txt"
+path = "./nslist.txt"
 if not os.path.exists(path):
-    with open("nsList.txt", "w") as file:
+    with open("nslist.txt", "w") as file:
         for each in classlistCOPY:
             file.write(each + "\n")
 
 else:
-    with open("nsList.txt", "r") as file:
+    with open("nslist.txt", "r") as file:
         notstartlist = file.readlines()
     
     for each in notstartlist:
         nslist.insert(END, each)
     
 #Currently in List
-path = "./cinList.txt"
+path = "./cinlist.txt"
 if not os.path.exists(path):
-    with open("cinList.txt", "w") as file:
+    with open("cinlist.txt", "w") as file:
         file.close()
-with open("cinList.txt", "r") as file:
+with open("cinlist.txt", "r") as file:
     currentinlist = file.readlines()
 
 for each in currentinlist:
     cinlist.insert(END, each)
 
 #Finished List
-path = "./finList.txt"
+path = "./finlist.txt"
 if not os.path.exists(path):
-    with open("finList.txt", "w") as file:
+    with open("finlist.txt", "w") as file:
         file.close()
-with open("finList.txt", "r") as file:
+with open("finlist.txt", "r") as file:
     finishedlist = file.readlines()
 for each in finishedlist:
     finlist.insert(END, each)
@@ -87,12 +87,21 @@ for each in finishedlist:
 
 def moveclassover(source, destination):
     selected = source.curselection()
+
+    stringsource = source.winfo_name() + ".txt"
+    stringdestination = destination.winfo_name() + ".txt"
+    
     for each in selected[::-1]:
         destination.insert(END, source.get(each))
         source.delete(each)
+    #print(stringsource + "\n" + stringdestination)
     #print(nslist.get(0, 'end'))
-    with open("finList.txt", "w") as file:
+    with open(stringsource, "w") as file:
         for each in source.get(0, "end"):
+            file.write(each)
+    
+    with open(stringdestination, "w") as file:
+        for each in destination.get(0, "end"):
             file.write(each)
 
 #TODO refactor each list.txt to be all lowercase. Makes this function significantly easier to manage.
