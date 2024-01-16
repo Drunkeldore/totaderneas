@@ -8,7 +8,7 @@ with open("classList.txt", "r") as file:
 classlist = [each.replace(" ï¿½" , "")[:-5] for each in rawclasslist]
 
 
-#TODO To avoid fucking it all up USE THIS
+# USE THIS to prevent issues with original list
 classlistCOPY = classlist
 
 #Finding the right width for Listbox based on longest class name
@@ -36,7 +36,6 @@ frmc.grid(column=2, row=0)
 # frmbtna.grid(column=0, row=1)
 # frmbtnb.grid(column=1, row=1)
 # frmbtnc.grid(column=2, row=1)
-#Creating a list of frames to remind me to refactor this shit later.
 #frame_list = [frma, frmb, frmc, frmbtna, frmbtnb, frmbtnc]
 
 
